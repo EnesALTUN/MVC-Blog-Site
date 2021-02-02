@@ -1,0 +1,37 @@
+﻿@model MVCBlogTez.Models.Kullanici
+
+@{
+    ViewBag.Title = "Giriş Yap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container loginForm section">
+        @using (Html.BeginForm("Login", "Home"))
+        {
+
+            if (ViewBag.Err != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Err
+                </div>
+            }
+
+            @Html.AntiForgeryToken()
+            <div class="formCerceve">
+                <h2>Giriş Yap</h2>
+                <hr />
+                <div class="form-group">
+                    @Html.Label("Email:")
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Şifre:")
+                    @Html.PasswordFor(x => x.Parola, new { @class = "form-control" })
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Giriş Yap" />
+                </div>
+            </div>
+        }
+    </div>

@@ -1,0 +1,32 @@
+﻿@model MVCBlogTez.Models.Rol
+@{
+    ViewBag.Title = "RolEkle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container loginForm section">
+    @using (Html.BeginForm("RolEkle", "Admin"))
+    {
+
+        if (ViewBag.Err != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Err
+            </div>
+        }
+
+        @Html.AntiForgeryToken()
+        <div class="formCerceve">
+            <h2>Rol Ekle</h2>
+            <hr />
+            <div class="form-group">
+                @Html.Label("Rol Adı:")
+                @Html.TextBoxFor(x => x.RolAd, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group text-right">
+                <input type="submit" name="login" value="Rol Ekle" />
+            </div>
+        </div>
+    }
+</div>

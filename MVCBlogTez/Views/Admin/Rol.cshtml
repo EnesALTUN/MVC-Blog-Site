@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MVCBlogTez.Models.Rol>
+@{
+    ViewBag.Title = "Rol";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="container">
+
+        <a class="btn btn-success mt-2" href="@Url.Action("RolEkle", "Admin")">Rol Ekle</a>
+
+        <table class="table edit mt-2">
+            <thead>
+                <tr>
+                    <th scope="col">Rol Ad</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Rol in Model)
+                {
+                    if (Rol.DurumId == 1)
+                    {
+                        <tr>
+                            <th scope="row">@Rol.RolAd</th>
+                            @if ((String.Compare(Rol.RolAd, "Admin") != 0) && (String.Compare(Rol.RolAd, "Üye") != 0))
+                            {
+                                <td><a href="@Url.RouteUrl("Default", new { controller="Admin", action="RolSil", id = Rol.RolId})" type="button" class="btn-danger">Sil</a></td>
+                            }
+                            else if ((String.Compare(Rol.RolAd, "Admin") == 0) || (String.Compare(Rol.RolAd, "Üye") == 0))
+                            {
+                                <td>Bu roller üzerinde işlem yapılamaz.</td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+
+    </div>

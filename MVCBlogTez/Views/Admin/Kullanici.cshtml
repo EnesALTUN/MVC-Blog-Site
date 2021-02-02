@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MVCBlogTez.Models.Kullanici>
+
+@{
+    ViewBag.Title = "Kullanici";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int sayac = 0;
+}
+
+<h2 class="mt-2">Kullanıcılar</h2>
+
+<table class="table edit mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Ad</th>
+            <th scope="col">Soyad</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Fotoğraf</th>
+            <th scope="col">Kayıt Tarihi</th>
+            <th scope="col">Son Giriş Tarihi</th>
+            <th scope="col">Cinsiyet</th>
+            <th scope="col">Doğum Tarihi</th>
+            <th scope="col">Açık Adres</th>
+            <th scope="col">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Kullanici in Model)
+        {
+            if (Kullanici.DurumId == 1)
+            {
+                <tr>
+                    <td scope="row">@Kullanici.Ad</td>
+                    <td scope="row">@Kullanici.Soyad</td>
+                    <td scope="row">@Kullanici.Email</td>
+                    <td scope="row">@Kullanici.Telefon</td>
+                    <td scope="row">
+                        @if (Kullanici.FotografKonum != "")
+                        {
+                            <img src="@Kullanici.FotografKonum" width="100px" height="100px" />
+                        }
+                        else
+                        {
+                            <span>Fotoğraf bulunamadı</span>
+                        }
+                    </td>
+                    <td scope="row">@Kullanici.KayitTarihi.ToString("dd MMM yyyy hh:mm")</td>
+                    <td scope="row">@Kullanici.SonGirisTarihi.ToString("dd MMM yyyy hh:mm")</td>
+                    <td scope="row">@Kullanici.Cinsiyet.CinsiyetAd</td>
+                    <td scope="row">@Kullanici.DogumTarihi.ToString("dd MMM yyyy")</td>
+                    <td scope="row">
+                        @if (Kullanici.AcikAdres != null)
+                        {
+                            @Kullanici.AcikAdres
+                        }
+                        else
+                        {
+                            <span>Adres bulunamadı</span>
+                        }
+                    </td>
+
+                    @if (String.Compare(Kullanici.Rol.RolAd, "Admin") != 0)
+                    {
+                        <td><a href="@Url.RouteUrl("Default", new { controller="Admin", action="AdminlikVer", id = Kullanici.KullaniciId})" type="button" class="btn-info">Adminlik Ver</a></td>
+                    }
+                    else if (String.Compare(Kullanici.Rol.RolAd, "Admin") == 0 && sayac == 0)
+                    {
+                        <td>Admin</td>
+                        sayac++;
+                    }
+                    else if (String.Compare(Kullanici.Rol.RolAd, "Admin") == 0 && sayac > 0)
+                    {
+                        <td><a href="@Url.RouteUrl("Default", new { controller="Admin", action="AdminlikGeriAl", id = Kullanici.KullaniciId})" type="button" class="btn-danger">Adminlik Geri Al</a></td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

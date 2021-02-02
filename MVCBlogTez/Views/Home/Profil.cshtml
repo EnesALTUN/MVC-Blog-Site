@@ -1,0 +1,79 @@
+﻿@model MVCBlogTez.Models.ViewModels.ProfilViewModel
+@{
+    ViewBag.Title = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var item in Model.Kullanicilar)
+{
+    <div class="container section">
+        @using (Html.BeginForm("ProfilDuzenle", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            if (ViewBag.Err != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Err
+                </div>
+            }
+            @Html.AntiForgeryToken()
+
+            <div class="formCerceve">
+                <h2>Profil</h2>
+                <hr />
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Ad:")
+                        @Html.TextBoxFor(x => item.Ad, new { @class = "form-control", @Name = "Ad", @id = "Ad" })
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Soyad:")
+                        @Html.TextBoxFor(x => item.Soyad, new { @class = "form-control", @Name = "Soyad", @id = "Soyad" })
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Email:")
+                        @Html.TextBoxFor(x => item.Email, new { @class = "form-control", @Name = "Email", @id = "Email" })
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Parola:")
+                        @Html.PasswordFor(x => item.Parola, new { @class = "form-control", @Name = "Parola", @id = "Parola" })
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Telefon:")
+                        @Html.TextBoxFor(x => item.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon" })
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <img src="@item.FotografKonum" style="width:100px; height:100px; float:left; margin-right:20px;" />
+                        @Html.Label("Fotoğraf:")<br />
+                        <input type="file" name="FotografKonum" />
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Cinsiyet:")<br />
+
+                        @foreach (var Cinsiyet in Model.Cinsiyetler)
+                        {
+                            if (item.CinsiyetId == Cinsiyet.CinsiyetId)
+                            {
+                                <span> </span><input type="radio" id="CinsiyetId" name="CinsiyetId" value="@Cinsiyet.CinsiyetId" checked> <span> </span>@Html.Label(Cinsiyet.CinsiyetAd)
+                            }
+                            else
+                            {
+                                <span> </span><input type="radio" id="CinsiyetId" name="CinsiyetId" value="@Cinsiyet.CinsiyetId"> <span> </span>@Html.Label(Cinsiyet.CinsiyetAd)
+                            }
+                        }
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        @Html.Label("Doğum Tarihi:")<b> @item.DogumTarihi.ToString("dd MMM yyyy") </b><br />
+                        @Html.TextBoxFor(x => item.DogumTarihi, new { type = "datetime-local", @Name = "DogumTarihi", @id = "DogumTarihi" })
+                    </div>
+                    <div class="form-group col-12">
+                        @Html.Label("Adres:")
+                        @Html.TextAreaFor(x => item.AcikAdres, new { @class = "form-control", @Name = "AcikAdres", @id = "AcikAdres" })
+                    </div>
+                    <div class="form-group col-12 text-right">
+                        <input type="submit" name="login" value="Düzenle" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

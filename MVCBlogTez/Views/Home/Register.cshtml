@@ -1,0 +1,57 @@
+﻿@model MVCBlogTez.Models.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+    <div class="container loginForm section">
+        @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+        {
+            if (TempData["bos"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["bos"]
+                </div>
+            }
+            @Html.AntiForgeryToken()
+            <div class="formCerceve">
+                <h2>Kayıt Ol</h2>
+                <hr />
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Ad:")
+                        @Html.TextBoxFor(x => x.Kullanici.Ad, new { @class = "form-control", @Name = "Ad", @id = "Ad" })
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Soyad:")
+                        @Html.TextBoxFor(x => x.Kullanici.Soyad, new { @class = "form-control", @Name = "Soyad", @id = "Soyad" })
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Email:")
+                        @Html.TextBoxFor(x => x.Kullanici.Email, new { @class = "form-control", @Name = "Email", @id = "Email" })
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Şifre:")
+                        @Html.PasswordFor(x => x.Kullanici.Parola, new { @class = "form-control", @Name = "Parola", @id = "Parola" })
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Telefon:")
+                        @Html.TextBoxFor(x => x.Kullanici.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon" })
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Cinsiyet:")<br />
+
+                        @foreach (var Cinsiyet in Model.Cinsiyetler)
+                        {
+                            <span> </span>@Html.RadioButtonFor(x => Cinsiyet.CinsiyetId, Cinsiyet.CinsiyetId, new { @Name = "CinsiyetId", @id = "CinsiyetId" }) <span> </span> @Html.Label(Cinsiyet.CinsiyetAd)
+                        }
+                    </div>
+                    <div class="col-12 col-md-6">
+                        @Html.Label("Doğum Tarihi:")
+                        @Html.TextBoxFor(x => x.Kullanici.DogumTarihi, new { type = "datetime-local", @Name = "DogumTarihi", @id = "DogumTarihi" })
+                    </div>
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Kayıt Ol" />
+                </div>
+            </div>
+        }
+    </div>

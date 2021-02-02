@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MVCBlogTez.Models.Yazi>
+@using MVCBlogTez.Func
+@{
+    ViewBag.Title = "Anasayfa";
+}
+<section class="section wb">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <div class="page-wrapper">
+                    <div class="blog-list clearfix">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="blog-box row">
+                                <div class="col-md-4">
+                                    <div class="post-media">
+                                        <a href="garden-single.html" title="">
+                                            <img src="@item.FotografKonum" alt="" class="img-fluid">
+                                            <div class="hovereffect"></div>
+                                        </a>
+                                    </div><!-- end media -->
+                                </div><!-- end col -->
+
+                                <div class="blog-meta big-meta col-md-8">
+                                    <span class="bg-aqua"><a href="garden-category.html" title="">@item.Kategori.KategoriAd</a></span>
+                                    <h4><a href="@Url.RouteUrl("Default", new { controller="Home", action="Yazi", id = item.YaziId})" title="">@item.Baslik</a></h4>
+                                    <p>@(Html.Raw(Tool.MetinKisalt(item.Icerik,200)))</p>
+                                    <small><i class="far fa-comment"></i> @item.YorumSayisi</small>
+                                    <small>@item.YayinlanmaTarihi.ToString("dd MMM yyyy")</small>
+                                    <small><a href="#" title="">@item.Kullanici.Ad @item.Kullanici.Soyad</a></small>
+                                </div><!-- end meta -->
+                            </div><!-- end blog-box -->
+
+                            <hr class="invis">
+                        }
+
+                    </div><!-- end blog-list -->
+                </div><!-- end page-wrapper -->
+            </div><!-- end col -->
+
+            @{Html.RenderAction("SagMenu", "Home");}
+
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>

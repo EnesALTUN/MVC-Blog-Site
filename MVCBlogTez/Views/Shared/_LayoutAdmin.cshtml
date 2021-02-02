@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Site Metas -->
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="~/Uploads/SiteImages/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/Uploads/SiteImages/apple-touch-icon.png">
+
+    <!-- Design fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-OLYO0LymqQ+uHXELyx93kblK5YIS3B2ZfLGBmsJaUyor7CpMTBsahDHByqSuWW+q" crossorigin="anonymous">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <header class="header adminPaneli">
+        <nav class="navbar navbar-inverse navbar-toggleable-md">
+            <a class="navbar-brand" href="#">Yönetim Paneli</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="ccollapse navbar-collapse justify-content-md-center" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">Anasayfa <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kullanıcı İşlemleri
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("Kullanici", "Admin")">Kullanıcı İşlemleri</a>
+                            <a class="dropdown-item" href="@Url.Action("Rol", "Admin")">Rol İşlemleri</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Duyuru", "Admin")">Duyuru İşlemleri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Slider", "Admin")">Slider İşlemleri</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Yazı İşlemleri
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("Yazi", "Admin")">Yazı İşlemleri</a>
+                            <a class="dropdown-item" href="@Url.Action("Kategori", "Admin")">Kategori İşlemleri</a>
+                            <a class="dropdown-item" href="@Url.Action("Etiket", "Admin")">Etiket İşlemleri</a>
+                            <a class="dropdown-item" href="@Url.Action("Yorum", "Admin")">Yorum İşlemleri</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            @if (Session["LoginUser"] == null)
+            {
+                <div class="profil">
+                    <a href="@Url.Action("Login", "Home")" type="button"><i class="fa fa-sign-in"></i> Giriş Yap</a>
+                    <a href="@Url.Action("Register", "Home")" type="button"><i class="fa fa-sign-in"></i> Kayıt Ol</a>
+                </div>
+            }
+            else if (Session["LoginUser"] != null)
+            {
+                <div class="profil">
+                    <a href="@Url.Action("Profil", "Home")" type="button"><i class="fa fa-sign-in"></i> Profil</a>
+                    <a href="@Url.Action("Cikis", "Home")" type="button"><i class="fa fa-sign-in"></i> Çıkış Yap</a>
+                </div>
+            }
+        </nav>
+    </header><!-- end header -->
+
+    <div id="wrapper">
+
+        @RenderBody()
+
+        <div class="dmtop">Scroll to Top</div>
+
+    </div><!-- end wrapper -->
+    <!-- Core JavaScript
+    ================================================== -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

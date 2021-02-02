@@ -1,0 +1,53 @@
+﻿<div class="collapse top-search" id="collapseExample">
+    <div class="card card-block">
+        <div class="newsletter-widget text-center">
+            <form class="form-inline">
+                <input type="text" class="form-control" placeholder="Ne Arıyorsun?">
+                <button type="submit" class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i></button>
+            </form>
+        </div><!-- end newsletter -->
+    </div>
+</div><!-- end top-search -->
+
+<div class="topbar-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-5 col-sm-6 hidden-xs-down">
+                <div class="topsocial">
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                </div><!-- end social -->
+            </div><!-- end col -->
+
+            <div class="col-lg-2 hidden-md-down">
+            </div><!-- end col -->
+
+            <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
+                <div class="user row">
+                    <div class="col-12 col-sm-3 topsearch text-right">
+                       
+                    </div><!-- end search -->
+                    @if (Session["LoginUser"] == null)
+                    {
+                        <div class="col-12 col-sm-6">
+                            <a href="@Url.Action("Login", "Home")" type="button"><i class="far fa-user"></i> Giriş Yap</a>
+                            <a href="@Url.Action("Register", "Home")" type="button"><i class="fas fa-user-plus"></i> Kayıt Ol</a>
+                        </div>
+                    }
+                    else if (Session["LoginUser"] != null)
+                    {
+                        <div class="col-12 col-sm-6">
+                            @if (Session["Rol"] != null && String.Compare(Session["Rol"].ToString(), "Admin") == 0)
+                            {
+                                    <a href="@Url.Action("Index", "Admin")" type="button"><i class="fa fa-sign-in"></i> Yönetim Paneli</a>
+                            }
+                            <a href="@Url.Action("Profil", "Home")" type="button"><i class="far fa-user"></i> Profil</a>
+                            <a href="@Url.Action("Cikis", "Home")" type="button"><i class="fa fa-sign-in"></i> Çıkış Yap</a>
+                        </div>
+                    }
+                </div>
+            </div><!-- end col -->
+        </div><!-- end row -->
+    </div><!-- end header-logo -->
+</div><!-- end topbar -->

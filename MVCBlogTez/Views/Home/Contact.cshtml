@@ -1,0 +1,34 @@
+﻿@model MVCBlogTez.Models.Iletisim
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 iletisimMap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3015.540828563294!2d31.178313915726847!3d40.90388617931142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x409da0db61c98693%3A0xeb421a6422f81e6d!2zRMO8emNlIMOcbml2ZXJzaXRlc2k!5e0!3m2!1str!2str!4v1610393553562!5m2!1str!2str" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+    </div>
+    <div class="col-12">
+        <div class="container section">
+            <h2>İletişim Sayfası</h2>
+            @using (Html.BeginForm("Iletisim", "Home", FormMethod.Post, new { @class = "form-wrapper" }))
+            {
+                if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+                @Html.AntiForgeryToken()
+
+                @Html.TextBoxFor(x => Model.AdSoyad, new { @class = "form-control", @Name = "AdSoyad", @id = "AdSoyad", @placeholder = "Ad Soyad" })
+                @Html.TextBoxFor(x => Model.Email, new { @class = "form-control", @Name = "Email", @id = "Email", @placeholder = "Email adresiniz" })
+                @Html.TextBoxFor(x => Model.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon", @placeholder = "Telefon" })
+                @Html.TextBoxFor(x => Model.Konu, new { @class = "form-control", @Name = "Konu", @id = "Konu", @placeholder = "Konu" })
+                @Html.TextAreaFor(x => Model.Mesaj, new { @class = "form-control", @Name = "Mesaj", @id = "Mesaj", @placeholder = "Mesaj" })
+
+                <button type="submit" class="btn btn-primary" style="float:right;">Gönder <i class="fa fa-envelope-open-o"></i></button>
+            }
+        </div>
+    </div>
+</div>

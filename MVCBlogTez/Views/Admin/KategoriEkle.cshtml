@@ -1,0 +1,31 @@
+﻿@model MVCBlogTez.Models.Kategori
+@{
+    ViewBag.Title = "KategoriEkle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="container loginForm section">
+        @using (Html.BeginForm("KategoriEkle", "Admin"))
+        {
+
+            if (ViewBag.Err != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Err
+                </div>
+            }
+
+            @Html.AntiForgeryToken()
+            <div class="formCerceve">
+                <h2>KategoriEkle</h2>
+                <hr />
+                <div class="form-group">
+                    @Html.Label("Kategori Ad:")
+                    @Html.TextBoxFor(x => x.KategoriAd, new { @class = "form-control" })
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Kategori Ekle" />
+                </div>
+            </div>
+        }
+    </div>

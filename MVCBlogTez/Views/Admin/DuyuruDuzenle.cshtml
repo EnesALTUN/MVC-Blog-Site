@@ -1,0 +1,31 @@
+﻿@model MVCBlogTez.Models.Duyuru
+@{
+    ViewBag.Title = "DuyuruDuzenle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container loginForm section">
+    @using (Html.BeginForm("DuyuruDuzenle", "Admin", FormMethod.Post))
+    {
+
+        if (TempData["err"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["err"]
+            </div>
+        }
+
+        @Html.AntiForgeryToken()
+        <div class="formCerceve">
+            <h2>Duyuru Düzenle</h2>
+            <hr />
+            <div class="form-group">
+                @Html.HiddenFor(x=>x.DuyuruId)
+                @Html.Label("Duyuru İçerik:")
+                @Html.TextBoxFor(x => x.DuyuruIcerik, new { @class = "form-control", @Name = "DuyuruIcerik" })
+            </div>
+            <div class="form-group text-right">
+                <input type="submit" name="login" value="Duyuru Düzenle" />
+            </div>
+        </div>
+    }
+</div>

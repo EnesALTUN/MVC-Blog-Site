@@ -1,0 +1,31 @@
+﻿@model IEnumerable<MVCBlogTez.Models.Duyuru>
+@{
+    ViewBag.Title = "Duyuru";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="container">
+
+        <a class="btn btn-success mt-2" href="@Url.Action("DuyuruEkle", "Admin")">Duyuru Ekle</a>
+
+        <table class="table edit mt-2">
+            <thead>
+                <tr>
+                    <th scope="col">Duyuru İçerik</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Duyuru in Model)
+                {
+                    if (Duyuru.DurumId == 1)
+                    {
+                        <tr>
+                            <td scope="row">@Duyuru.DuyuruIcerik</td>
+                            <td><a href="@Url.RouteUrl("Default", new { controller="Admin", action="DuyuruDuzenle", id = Duyuru.DuyuruId})" type="button" class="btn-warning">Düzenle</a><a href="@Url.RouteUrl("Default", new { controller="Admin", action="DuyuruSil", id = Duyuru.DuyuruId})" type="button" class="btn-danger">Sil</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
