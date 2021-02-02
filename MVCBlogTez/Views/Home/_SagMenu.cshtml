@@ -19,7 +19,7 @@
 
                     @foreach (var Yazi in Model.Yazilar)
                     {
-                        <a href="garden-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a href="@Url.RouteUrl("Default", new { controller="Home", action="Yazi", id = Yazi.YaziId})" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="w-100 justify-content-between">
                                 <img src="@Yazi.FotografKonum" alt="" class="img-fluid float-left">
                                 <h5 class="mb-1">@Yazi.Baslik</h5>
