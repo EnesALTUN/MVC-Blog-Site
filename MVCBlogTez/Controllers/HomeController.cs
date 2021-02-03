@@ -62,28 +62,28 @@ namespace MVCBlogTez.Controllers
         [HttpPost]
         public ActionResult Register(Kullanici kullanici)
         {
-            if (kullanici.Ad == null || kullanici.Soyad == null || kullanici.Email == null || kullanici.Parola == null || kullanici.Telefon == null || kullanici.CinsiyetId == null || kullanici.DogumTarihi == null)
+            if (ModelState.IsValid)
             {
-                TempData["bos"] = "Tüm alanları doldurun.";
-                return Redirect("/Home/Register");
-            }
-            else if (blogContext.Kullanici.Where(x => x.Email == kullanici.Email).Count() > 0)
-            {
-                TempData["bos"] = "Girilen email adresi kullanımda.";
-                return Redirect("/Home/Register");
+                if (blogContext.Kullanici.Where(x => x.Email == kullanici.Email).Count() > 0)
+                {
+                    TempData["bos"] = "Girilen email adresi kullanımda.";
+                    return Redirect("/Home/Register");
+                }
+                else
+                {
+                    kullanici.KayitTarihi = DateTime.Now;
+                    kullanici.RolId = 2;
+                    kullanici.DurumId = 1;
+                    kullanici.SonGirisTarihi = DateTime.Now;
+                    kullanici.Parola = Tool.GenerateMd5(kullanici.Parola);
+
+                    blogContext.Kullanici.Add(kullanici);
+                    blogContext.SaveChanges();
+                }
+                return Redirect("/Home/Login");
             }
             else
-            {
-                kullanici.KayitTarihi = DateTime.Now;
-                kullanici.RolId = 2;
-                kullanici.DurumId = 1;
-                kullanici.SonGirisTarihi = DateTime.Now;
-                kullanici.Parola = Tool.GenerateMd5(kullanici.Parola);
-
-                blogContext.Kullanici.Add(kullanici);
-                blogContext.SaveChanges();
-            }
-            return Redirect("/Home/Login");
+                return RedirectToAction("Register", "Home");
         }
 
         [Authorize]

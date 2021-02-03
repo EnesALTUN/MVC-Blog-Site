@@ -9,15 +9,25 @@ namespace MVCBlogTez.Models
     public class Kullanici
     {
         public int KullaniciId { get; set; }
+
+        [Required(ErrorMessage = "*Ad alanı boş geçilemez.")]
         public string Ad { get; set; }
+
+        [Required(ErrorMessage = "*Soyad alanı boş geçilemez.")]
         public string Soyad { get; set; }
+
+        [Required(ErrorMessage = "*Email alanı boş geçilemez.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "*Parola alanı boş geçilemez.")]
         public string Parola { get; set; }
         public string Telefon { get; set; }
         public string FotografKonum { get; set; }
         public DateTime KayitTarihi { get; set; }
         public DateTime SonGirisTarihi { get; set; }
         public int? CinsiyetId { get; set; }
+
+        [Required(ErrorMessage = "*Doğum Tarihi alanı boş geçilemez.")]
         public DateTime DogumTarihi { get; set; }
         public string AcikAdres { get; set; }
         public int DurumId { get; set; }

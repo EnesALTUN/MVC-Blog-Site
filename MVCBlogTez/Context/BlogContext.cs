@@ -1,4 +1,5 @@
-﻿using MVCBlogTez.Models;
+﻿using MVCBlogTez.App_Start;
+using MVCBlogTez.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +13,7 @@ namespace MVCBlogTez.Context
     {
         public BlogContext() : base("BlogBaglanti")     // Web.config dosyasındaki connectionstring ile bağlantı yapıldı ve veritabanına bağlandı
         {
-
+            Database.SetInitializer(new MyInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
