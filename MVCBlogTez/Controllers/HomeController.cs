@@ -31,23 +31,32 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string Email, string Parola)
         {
-            Parola = Tool.GenerateMd5(Parola);
-
-            var kullanici = blogContext.Kullanici.Include("Rol").Where(
-                m => m.Email == Email && m.Parola == Parola).FirstOrDefault();
-            if (kullanici != null && ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                FormsAuthentication.SetAuthCookie(kullanici.Email, false);
-                Session["LoginUser"] = kullanici.Email;
-                Session["UserId"] = kullanici.KullaniciId;
-                Session["Rol"] = (string)kullanici.Rol.RolAd;
-                return RedirectToAction("Index", "Home");
+                Parola = Tool.GenerateMd5(Parola);
+
+                var kullanici = blogContext.Kullanici.Include("Rol").Where(
+                    m => m.Email == Email && m.Parola == Parola).FirstOrDefault();
+
+                if (kullanici != null)
+                {
+                    FormsAuthentication.SetAuthCookie(kullanici.Email, false);
+                    Session["LoginUser"] = kullanici.Email;
+                    Session["UserId"] = kullanici.KullaniciId;
+                    Session["Rol"] = (string)kullanici.Rol.RolAd;
+
+                    kullanici.SonGirisTarihi = DateTime.Now;
+                    blogContext.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Err = "Bilgiler hatalı!";
+                    return View();
+                }
             }
             else
-            {
-                ViewBag.Err = "Bilgiler hatalı!";
                 return View();
-            }
         }
 
         public ActionResult Register()
@@ -211,7 +220,7 @@ namespace MVCBlogTez.Controllers
             kullanici1.Ad = kullanici.Ad;
             kullanici1.Soyad = kullanici.Soyad;
             kullanici1.Email = kullanici.Email;
-            kullanici1.Parola = kullanici.Parola;
+            kullanici1.Parola = Tool.GenerateMd5(kullanici.Parola);
             kullanici1.Telefon = kullanici.Telefon;
 
             if (Path.GetFileName(Request.Files[0].FileName) != "")

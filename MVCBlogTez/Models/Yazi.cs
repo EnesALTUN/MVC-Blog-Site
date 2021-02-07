@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,9 +10,12 @@ namespace MVCBlogTez.Models
     public class Yazi
     {
         public int YaziId { get; set; }
+
+        [Required(ErrorMessage = "*Başlık alanı boş geçilemez.")]
         public string Baslik { get; set; }
 
         [AllowHtml]
+        [Required(ErrorMessage = "*İçerik alanı boş geçilemez.")]
         public string Icerik { get; set; }
         public int YorumSayisi { get; set; }
         public int KullaniciId { get; set; }

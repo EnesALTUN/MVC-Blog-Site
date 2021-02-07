@@ -16,6 +16,7 @@
                 </div>
             }
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="formCerceve">
                 <h2>Profil</h2>
@@ -24,18 +25,22 @@
                     <div class="form-group col-12 col-md-6">
                         @Html.Label("Ad:")
                         @Html.TextBoxFor(x => item.Ad, new { @class = "form-control", @Name = "Ad", @id = "Ad" })
+                        @Html.ValidationMessageFor(x => item.Ad, "", new { @style = "color:red", @data_valmsg_for = "Ad" })
                     </div>
                     <div class="form-group col-12 col-md-6">
                         @Html.Label("Soyad:")
                         @Html.TextBoxFor(x => item.Soyad, new { @class = "form-control", @Name = "Soyad", @id = "Soyad" })
+                        @Html.ValidationMessageFor(x => item.Soyad, "", new { @style = "color:red", @data_valmsg_for = "Soyad" })
                     </div>
                     <div class="form-group col-12 col-md-6">
                         @Html.Label("Email:")
                         @Html.TextBoxFor(x => item.Email, new { @class = "form-control", @Name = "Email", @id = "Email" })
+                        @Html.ValidationMessageFor(x => item.Email, "", new { @style = "color:red", @data_valmsg_for = "Email" })
                     </div>
                     <div class="form-group col-12 col-md-6">
                         @Html.Label("Parola:")
                         @Html.PasswordFor(x => item.Parola, new { @class = "form-control", @Name = "Parola", @id = "Parola" })
+                        @Html.ValidationMessageFor(x => item.Parola, "", new { @style = "color:red", @data_valmsg_for = "Parola" })
                     </div>
                     <div class="form-group col-12 col-md-6">
                         @Html.Label("Telefon:")

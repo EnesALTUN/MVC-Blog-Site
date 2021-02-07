@@ -16,12 +16,15 @@
             }
 
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="formCerceve">
                 <h2>KategoriEkle</h2>
                 <hr />
                 <div class="form-group">
                     @Html.Label("Kategori Ad:")
                     @Html.TextBoxFor(x => x.KategoriAd, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.KategoriAd, "", new { @style = "color:red", @data_valmsg_for = "KategoriAd" })
                 </div>
                 <div class="form-group text-right">
                     <input type="submit" name="login" value="Kategori Ekle" />

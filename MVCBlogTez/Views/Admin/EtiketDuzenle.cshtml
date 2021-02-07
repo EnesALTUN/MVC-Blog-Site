@@ -7,22 +7,18 @@
     <div class="container loginForm section">
         @using (Html.BeginForm("EtiketDuzenle", "Admin", FormMethod.Post))
         {
-
-            if (TempData["err"] != null)
-            {
-                <div class="alert alert-danger">
-                    @TempData["err"]
-                </div>
-            }
-
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="formCerceve">
                 <h2>Etiket Düzenle</h2>
                 <hr />
                 <div class="form-group">
                     @Html.HiddenFor(x => x.Etiket.EtiketId, new { @Name = "EtiketId" })
+
                     @Html.Label("Etiket Adı:")
                     @Html.TextBoxFor(x => x.Etiket.EtiketAd, new { @class = "form-control", @Name = "EtiketAd" })
+                    @Html.ValidationMessageFor(x => x.Etiket.EtiketAd, "", new { @style = "color:red", @data_valmsg_for = "EtiketAd" })
                 </div>
                 <div class="form-group">
                     @Html.Label("Yazı Adı:")<br />
@@ -33,9 +29,9 @@
                         }
                     </select>
                 </div>
-        <div class="form-group text-right">
-            <input type="submit" name="login" value="Etiket Düzenle" />
-        </div>
-    </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Etiket Düzenle" />
+                </div>
+            </div>
         }
     </div>

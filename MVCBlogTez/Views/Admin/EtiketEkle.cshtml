@@ -4,38 +4,33 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container loginForm section">
-    @using (Html.BeginForm("EtiketEkle", "Admin"))
-    {
-
-        if (TempData["err"] != null)
+    <div class="container loginForm section">
+        @using (Html.BeginForm("EtiketEkle", "Admin"))
         {
-            <div class="alert alert-danger">
-                @TempData["err"]
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="formCerceve">
+                <h2>Etiket Ekle</h2>
+                <hr />
+                <div class="form-group">
+                    @Html.Label("Etiket Adı:")
+                    @Html.TextBoxFor(x => Model.Etiket.EtiketAd, new { @class = "form-control", @Name = "EtiketAd" })
+                    @Html.ValidationMessageFor(x => Model.Etiket.EtiketAd, "", new { @style = "color:red", @data_valmsg_for = "EtiketAd" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Yazı Adı:")<br />
+                    <select name="yazilar">
+                        @foreach (var Yazi in Model.Yazilar)
+                        {
+                            <option value="@Yazi.YaziId" name="YaziId">@Yazi.Baslik</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Etiket Ekle" />
+                </div>
             </div>
         }
-
-        @Html.AntiForgeryToken()
-        <div class="formCerceve">
-            <h2>Etiket Ekle</h2>
-            <hr />
-            <div class="form-group">
-                @Html.Label("Etiket Adı:")
-                @Html.TextBoxFor(x => Model.Etiket.EtiketAd, new { @class = "form-control", @Name="EtiketAd" })
-            </div>
-            <div class="form-group">
-                @Html.Label("Yazı Adı:")<br />
-                <select name="yazilar">
-                    @foreach (var Yazi in Model.Yazilar)
-                    {
-                        <option value="@Yazi.YaziId" name="YaziId">@Yazi.Baslik</option>
-                    }
-                </select>
-            </div>
-            
-            <div class="form-group text-right">
-                <input type="submit" name="login" value="Etiket Ekle" />
-            </div>
-        </div>
-    }
-</div>
+    </div>

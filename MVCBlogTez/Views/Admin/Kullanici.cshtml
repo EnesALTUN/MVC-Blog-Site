@@ -35,7 +35,7 @@
                     <td scope="row">@Kullanici.Email</td>
                     <td scope="row">@Kullanici.Telefon</td>
                     <td scope="row">
-                        @if (Kullanici.FotografKonum != "")
+                        @if (Kullanici.FotografKonum != null)
                         {
                             <img src="@Kullanici.FotografKonum" width="100px" height="100px" />
                         }

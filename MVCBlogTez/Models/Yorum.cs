@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +10,8 @@ namespace MVCBlogTez.Models
     {
         public int YorumId { get; set; }
         public int KullaniciId { get; set; }
+
+        [Required(ErrorMessage = "*Yorum alanı boş geçilemez.")]
         public string YorumIcerik { get; set; }
         public DateTime YayinlanmaTarihi { get; set; }
         public int YaziId { get; set; }

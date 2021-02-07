@@ -4,40 +4,35 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container loginForm section">
-    @using (Html.BeginForm("SliderEkle", "Admin",FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-
-        if (TempData["err"] != null)
+    <div class="container loginForm section">
+        @using (Html.BeginForm("SliderEkle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="alert alert-danger">
-                @TempData["err"]
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="formCerceve">
+                <h2>Slider Ekle</h2>
+                <hr />
+                <div class="form-group">
+                    @Html.Label("Slider Başlık:")
+                    @Html.TextBoxFor(x => x.SliderBaslik, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Slider İçerik:")
+                    @Html.TextBoxFor(x => x.SliderIcerik, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    @Html.Label("Fotoğraf:")<br />
+                    <input type="file" name="FotografKonum" />
+                    @Html.ValidationMessageFor(x => x.FotografKonum, "", new { @style = "color:red", @data_valmsg_for = "FotografKonum" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Sıralama:")
+                    @Html.TextBoxFor(x => x.Siralama, new { @class = "form-control" })
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Slider Ekle" />
+                </div>
             </div>
         }
-
-        @Html.AntiForgeryToken()
-        <div class="formCerceve">
-            <h2>Slider Ekle</h2>
-            <hr />
-            <div class="form-group">
-                @Html.Label("Slider Başlık:")
-                @Html.TextBoxFor(x => x.SliderBaslik, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.Label("Slider İçerik:")
-                @Html.TextBoxFor(x => x.SliderIcerik, new { @class = "form-control" })
-            </div>
-            <div class="form-group col-12 col-md-6">
-                @Html.Label("Fotoğraf:")<br />
-                <input type="file" name="FotografKonum" />
-            </div>
-            <div class="form-group">
-                @Html.Label("Sıralama:")
-                @Html.TextBoxFor(x => x.Siralama, new { @class = "form-control" })
-            </div>
-            <div class="form-group text-right">
-                <input type="submit" name="login" value="Slider Ekle" />
-            </div>
-        </div>
-    }
-</div>
+    </div>

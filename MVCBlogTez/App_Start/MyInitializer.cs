@@ -64,9 +64,35 @@ namespace MVCBlogTez.App_Start
             };
             #endregion
 
+            #region Slider
+            Slider slider1 = new Slider()
+            {
+                FotografKonum = "/Uploads/images/Slider.jpg",
+                Siralama = 1,
+                DurumId = 1
+            };
+            Slider slider2 = new Slider()
+            {
+                FotografKonum = "/Uploads/images/Slider.jpg",
+                Siralama = 2,
+                DurumId = 1
+            };
+            Slider slider3 = new Slider()
+            {
+                FotografKonum = "/Uploads/images/Slider.jpg",
+                Siralama = 3,
+                DurumId = 1
+            };
+            #endregion
+
+
             context.Durum.Add(durumAktif);
             context.Durum.Add(durumPasif);
             context.SaveChanges();
+
+            context.Slider.Add(slider1);
+            context.Slider.Add(slider2);
+            context.Slider.Add(slider3);
 
             context.Rol.Add(rolAdmin);
             context.Rol.Add(rolÜye);

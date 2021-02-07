@@ -9,6 +9,5 @@ namespace MVCBlogTez.Models.ViewModels
     {
         public Kullanici Kullanici { get; set; }
         public List<Cinsiyet> Cinsiyetler { get; set; }
-        public int SelectedCinsiyetId { get; set; }
     }
 }

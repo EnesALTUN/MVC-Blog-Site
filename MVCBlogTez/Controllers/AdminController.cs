@@ -67,18 +67,13 @@ namespace MVCBlogTez.Controllers
         [HttpPost]
         public ActionResult DuyuruEkle(Duyuru duyuru)
         {
-            if (duyuru.DuyuruIcerik == null)
-            {
-                TempData["bos"] = "Duyuru rol eklenemez";
-            }
-            else
-            {
-                duyuru.KullaniciId = (int)Session["UserId"];
-                duyuru.YayinlanmaTarihi = DateTime.Now;
-                duyuru.DurumId = 1;
-                blogContext.Duyuru.Add(duyuru);
-                blogContext.SaveChanges();
-            }
+            duyuru.KullaniciId = (int)Session["UserId"];
+            duyuru.YayinlanmaTarihi = DateTime.Now;
+            duyuru.DurumId = 1;
+
+            blogContext.Duyuru.Add(duyuru);
+            blogContext.SaveChanges();
+
             return Redirect("/Admin/Duyuru");
         }
 
@@ -105,8 +100,8 @@ namespace MVCBlogTez.Controllers
         public ActionResult DuyuruDuzenle(Duyuru duyuru)
         {
             Duyuru duyuru1 = blogContext.Duyuru.Where(x => x.DuyuruId == duyuru.DuyuruId).SingleOrDefault();
-            duyuru1.DuyuruIcerik = duyuru.DuyuruIcerik;
 
+            duyuru1.DuyuruIcerik = duyuru.DuyuruIcerik;
             blogContext.SaveChanges();
 
             return Redirect("/Admin/Duyuru");
@@ -126,6 +121,7 @@ namespace MVCBlogTez.Controllers
             EtiketViewModel etiketview = new EtiketViewModel();
 
             etiketview.Yazilar = blogContext.Yazi.ToList();
+
             return View(etiketview);
         }
 
@@ -156,6 +152,7 @@ namespace MVCBlogTez.Controllers
         public ActionResult EtiketDuzenle(Etiket etiket)
         {
             Etiket etiket1 = blogContext.Etiket.Where(x => x.EtiketId == etiket.EtiketId).SingleOrDefault();
+
             etiket1.EtiketAd = etiket.EtiketAd;
             etiket1.YaziId = Convert.ToInt32(Request.Form["yazilar"]);
             blogContext.SaveChanges();
@@ -195,7 +192,6 @@ namespace MVCBlogTez.Controllers
         public ActionResult KategoriEkle(Kategori kategori)
         {
             kategori.YaziSayisi = 0;
-
             kategori.KullaniciId = (int)Session["UserId"];
             kategori.OlusturulmaTarihi = DateTime.Now;
             kategori.DurumId = 1;
@@ -237,16 +233,10 @@ namespace MVCBlogTez.Controllers
         [HttpPost]
         public ActionResult RolEkle(Rol rol)
         {
-            if (rol.RolAd == null)
-            {
-                TempData["bos"] = "Boş rol eklenemez";
-            }
-            else
-            {
-                rol.DurumId = 1;
-                blogContext.Rol.Add(rol);
-                blogContext.SaveChanges();
-            }
+            rol.DurumId = 1;
+            blogContext.Rol.Add(rol);
+            blogContext.SaveChanges();
+
             return Redirect("/Admin/Rol");
         }
 
@@ -278,26 +268,20 @@ namespace MVCBlogTez.Controllers
         [HttpPost]
         public ActionResult SliderEkle(Slider slider)
         {
-            if (slider.FotografKonum == null)
-            {
-                TempData["bos"] = "Boş slider eklenemez";
-            }
-            else
-            {
-                slider.DurumId = 1;
+            slider.DurumId = 1;
 
-                if (Path.GetFileName(Request.Files[0].FileName) != "")
-                {
-                    string filename = Path.GetFileName(Request.Files[0].FileName);
-                    string uzanti = Path.GetExtension(Request.Files[0].FileName);
-                    string yol = "~/Uploads/images/" + filename;
-                    Request.Files[0].SaveAs(Server.MapPath(yol));
-                    slider.FotografKonum = "/Uploads/images/" + filename;
-                }
-
-                blogContext.Slider.Add(slider);
-                blogContext.SaveChanges();
+            if (Path.GetFileName(Request.Files[0].FileName) != "")
+            {
+                string filename = Path.GetFileName(Request.Files[0].FileName);
+                string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                string yol = "~/Uploads/images/" + filename;
+                Request.Files[0].SaveAs(Server.MapPath(yol));
+                slider.FotografKonum = "/Uploads/images/" + filename;
             }
+
+            blogContext.Slider.Add(slider);
+            blogContext.SaveChanges();
+
             return Redirect("/Admin/Slider");
         }
 

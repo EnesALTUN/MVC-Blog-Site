@@ -17,6 +17,7 @@ namespace MVCBlogTez.Models
         public string Soyad { get; set; }
 
         [Required(ErrorMessage = "*Email alanı boş geçilemez.")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Geçerli Email adresi giriniz.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "*Parola alanı boş geçilemez.")]

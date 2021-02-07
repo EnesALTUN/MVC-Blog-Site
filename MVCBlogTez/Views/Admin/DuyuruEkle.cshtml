@@ -7,22 +7,16 @@
     <div class="container loginForm section">
         @using (Html.BeginForm("DuyuruEkle", "Admin"))
         {
-
-            if (TempData["err"] != null)
-            {
-                <div class="alert alert-danger">
-                    @TempData["err"]
-                </div>
-            }
-
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="formCerceve">
                 <h2>Duyuru Ekle</h2>
                 <hr />
                 <div class="form-group">
                     @Html.Label("Duyuru İçerik:")
                     @Html.TextBoxFor(x => x.DuyuruIcerik, new { @class = "form-control" })
-
+                    @Html.ValidationMessageFor(x => x.DuyuruIcerik, "", new { @style = "color:red", @data_valmsg_for = "DuyuruIcerik" })
                 </div>
                 <div class="form-group text-right">
                     <input type="submit" name="login" value="Duyuru Ekle" />

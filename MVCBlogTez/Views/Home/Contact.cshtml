@@ -20,14 +20,23 @@
                     </div>
                 }
                 @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 @Html.TextBoxFor(x => Model.AdSoyad, new { @class = "form-control", @Name = "AdSoyad", @id = "AdSoyad", @placeholder = "Ad Soyad" })
-                @Html.TextBoxFor(x => Model.Email, new { @class = "form-control", @Name = "Email", @id = "Email", @placeholder = "Email adresiniz" })
-                @Html.TextBoxFor(x => Model.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon", @placeholder = "Telefon" })
-                @Html.TextBoxFor(x => Model.Konu, new { @class = "form-control", @Name = "Konu", @id = "Konu", @placeholder = "Konu" })
-                @Html.TextAreaFor(x => Model.Mesaj, new { @class = "form-control", @Name = "Mesaj", @id = "Mesaj", @placeholder = "Mesaj" })
+                @Html.ValidationMessageFor(x => Model.AdSoyad, "", new { @style = "color:red", @data_valmsg_for = "AdSoyad" })
 
-                <button type="submit" class="btn btn-primary" style="float:right;">Gönder <i class="fa fa-envelope-open-o"></i></button>
+                @Html.TextBoxFor(x => Model.Email, new { @class = "form-control", @Name = "Email", @id = "Email", @placeholder = "Email adresiniz" })
+                @Html.ValidationMessageFor(x => Model.Email, "", new { @style = "color:red", @data_valmsg_for = "Email" })
+
+                @Html.TextBoxFor(x => Model.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon", @placeholder = "Telefon" })
+
+                @Html.TextBoxFor(x => Model.Konu, new { @class = "form-control", @Name = "Konu", @id = "Konu", @placeholder = "Konu" })
+                @Html.ValidationMessageFor(x => Model.Konu, "", new { @style = "color:red", @data_valmsg_for = "Konu" })
+
+                @Html.TextAreaFor(x => Model.Mesaj, new { @class = "form-control", @Name = "Mesaj", @id = "Mesaj", @placeholder = "Mesaj" })
+                @Html.ValidationMessageFor(x => Model.Mesaj, "", new { @style = "color:red", @data_valmsg_for = "Mesaj" })
+
+                <button type="submit" class="btn btn-primary" style="float:right; margin: 1.4rem 0;">Gönder <i class="fa fa-envelope-open-o"></i></button>
             }
         </div>
     </div>

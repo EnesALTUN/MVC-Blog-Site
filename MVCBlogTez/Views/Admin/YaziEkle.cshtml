@@ -8,24 +8,21 @@
         @using (Html.BeginForm("YaziEkle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
 
-            if (TempData["err"] != null)
-            {
-                <div class="alert alert-danger">
-                    @TempData["err"]
-                </div>
-            }
-
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="formCerceve">
                 <h2>Yazi Ekle</h2>
                 <hr />
                 <div class="form-group">
                     @Html.Label("Yazı Başlık:")
                     @Html.TextBoxFor(x => Model.Yazi.Baslik, new { @class = "form-control", @Name = "Baslik" })
+                    @Html.ValidationMessageFor(x => Model.Yazi.Baslik, "", new { @style = "color:red", @data_valmsg_for = "Baslik" })
                 </div>
                 <div class="form-group">
                     @Html.Label("Yazı İçerik:")
-                    @Html.TextAreaFor(x => Model.Yazi.Icerik, new { @class = "form-control", @Name = "Icerik", @id="editor1" })
+                    @Html.TextAreaFor(x => Model.Yazi.Icerik, new { @class = "form-control", @Name = "Icerik", @id = "editor1" })
+                    @Html.ValidationMessageFor(x => Model.Yazi.Icerik, "", new { @style = "color:red", @data_valmsg_for = "Icerik" })
                 </div>
                 <div class="form-group">
                     @Html.Label("Kategori Adı:")<br />
@@ -35,7 +32,7 @@
                             <option value="@Kategori.KategoriId" name="KategoriId">@Kategori.KategoriAd</option>
                         }
                     </select>
-                </div>                
+                </div>
                 <div class="form-group col-12 col-md-6">
                     @Html.Label("Fotoğraf:")<br />
                     <input type="file" name="FotografKonum" />

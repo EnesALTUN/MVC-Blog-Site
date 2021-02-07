@@ -3,29 +3,25 @@
     ViewBag.Title = "DuyuruDuzenle";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div class="container loginForm section">
-    @using (Html.BeginForm("DuyuruDuzenle", "Admin", FormMethod.Post))
-    {
-
-        if (TempData["err"] != null)
+    <div class="container loginForm section">
+        @using (Html.BeginForm("DuyuruDuzenle", "Admin", FormMethod.Post))
         {
-            <div class="alert alert-danger">
-                @TempData["err"]
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="formCerceve">
+                <h2>Duyuru Düzenle</h2>
+                <hr />
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.DuyuruId)
+
+                    @Html.Label("Duyuru İçerik:")
+                    @Html.TextBoxFor(x => x.DuyuruIcerik, new { @class = "form-control", @Name = "DuyuruIcerik" })
+                    @Html.ValidationMessageFor(x => x.DuyuruIcerik, "", new { @style = "color:red", @data_valmsg_for = "DuyuruIcerik" })
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="login" value="Duyuru Düzenle" />
+                </div>
             </div>
         }
-
-        @Html.AntiForgeryToken()
-        <div class="formCerceve">
-            <h2>Duyuru Düzenle</h2>
-            <hr />
-            <div class="form-group">
-                @Html.HiddenFor(x=>x.DuyuruId)
-                @Html.Label("Duyuru İçerik:")
-                @Html.TextBoxFor(x => x.DuyuruIcerik, new { @class = "form-control", @Name = "DuyuruIcerik" })
-            </div>
-            <div class="form-group text-right">
-                <input type="submit" name="login" value="Duyuru Düzenle" />
-            </div>
-        </div>
-    }
-</div>
+    </div>

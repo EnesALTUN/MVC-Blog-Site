@@ -13,7 +13,7 @@ namespace MVCBlogTez.Context
     {
         public BlogContext() : base("BlogBaglanti")     // Web.config dosyasındaki connectionstring ile bağlantı yapıldı ve veritabanına bağlandı
         {
-            Database.SetInitializer(new MyInitializer());
+            Database.SetInitializer(new MyInitializer());   // FakeData için verilerin olduğunu belirttik.
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

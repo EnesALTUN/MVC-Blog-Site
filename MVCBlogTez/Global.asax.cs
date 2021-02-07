@@ -16,7 +16,6 @@ namespace MVCBlogTez
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            //GlobalFilters.Filters.Add(new AuthorizeAttribute);
         }
 
         //Çıkıs işleminden sonra geri gelmemesi için cache işlemi
