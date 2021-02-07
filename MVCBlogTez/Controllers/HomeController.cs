@@ -69,6 +69,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(Kullanici kullanici)
         {
             if (ModelState.IsValid)
@@ -141,13 +142,9 @@ namespace MVCBlogTez.Controllers
             return View(yazi);
         }
 
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
         [Authorize(Roles = "Üye, Admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Yorum(Yorum yorum)
         {
             if (yorum.YorumIcerik == null)
@@ -212,6 +209,7 @@ namespace MVCBlogTez.Controllers
 
         [Authorize(Roles = "Üye, Admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ProfilDuzenle(Kullanici kullanici)
         {
             int UserId = (int)Session["UserId"];
@@ -237,19 +235,25 @@ namespace MVCBlogTez.Controllers
             blogContext.SaveChanges();
             return Redirect("/Home/Profil");
         }
-        
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Iletisim(Iletisim iletisim)
         {
-                var body = new StringBuilder();
-                body.AppendLine("Ad Soyad: " + iletisim.AdSoyad);
-                body.AppendLine("Email: " + iletisim.Email);
-                body.AppendLine("Tel: " + iletisim.Telefon);
-                body.AppendLine("Konu: " + iletisim.Konu);
-                body.AppendLine("Mesaj: " + iletisim.Mesaj);
+            var body = new StringBuilder();
+            body.AppendLine("Ad Soyad: " + iletisim.AdSoyad);
+            body.AppendLine("Email: " + iletisim.Email);
+            body.AppendLine("Tel: " + iletisim.Telefon);
+            body.AppendLine("\nMesaj: " + iletisim.Mesaj);
 
-                Gmail.SendMail(body.ToString());
-                TempData["Success"] = "Mesajınız başarıyla gönderilmiştir.";
+            Gmail.SendMail(body.ToString(), iletisim.Konu);
+            TempData["Success"] = "Mesajınız başarıyla gönderilmiştir.";
+            
             return Redirect("/Home/Contact");
         }
     }

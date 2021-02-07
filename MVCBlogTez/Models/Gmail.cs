@@ -9,11 +9,11 @@ namespace MVCBlogTez.Models
 {
     public class Gmail
     {
-        public static void SendMail(string body)
+        public static void SendMail(string body, string konu)
         {
             var fromAddress = new MailAddress("mvcblogtez@gmail.com", "İletişim Formu");
             var toAddress = new MailAddress("mvcblogtez@gmail.com");
-            const string subject = "Konu";
+            string subject = konu;
 
             using (var smtp = new SmtpClient
             {
@@ -23,7 +23,6 @@ namespace MVCBlogTez.Models
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, "12.123qw")
-                //trololol kısmı e-posta adresinin şifresi
             })
             {
                 using (var message = new MailMessage(fromAddress, toAddress) { Subject = subject, Body = body })

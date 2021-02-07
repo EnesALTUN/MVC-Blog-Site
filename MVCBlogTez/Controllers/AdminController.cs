@@ -65,6 +65,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DuyuruEkle(Duyuru duyuru)
         {
             duyuru.KullaniciId = (int)Session["UserId"];
@@ -97,6 +98,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DuyuruDuzenle(Duyuru duyuru)
         {
             Duyuru duyuru1 = blogContext.Duyuru.Where(x => x.DuyuruId == duyuru.DuyuruId).SingleOrDefault();
@@ -126,6 +128,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EtiketEkle(Etiket etiket)
         {
             if (etiket != null)
@@ -149,6 +152,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EtiketDuzenle(Etiket etiket)
         {
             Etiket etiket1 = blogContext.Etiket.Where(x => x.EtiketId == etiket.EtiketId).SingleOrDefault();
@@ -189,6 +193,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult KategoriEkle(Kategori kategori)
         {
             kategori.YaziSayisi = 0;
@@ -231,6 +236,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RolEkle(Rol rol)
         {
             rol.DurumId = 1;
@@ -266,6 +272,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SliderEkle(Slider slider)
         {
             slider.DurumId = 1;
@@ -318,6 +325,7 @@ namespace MVCBlogTez.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult YaziEkle(Yazi yazi)
         {
             if (yazi != null)
