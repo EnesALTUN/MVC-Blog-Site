@@ -29,6 +29,8 @@ namespace MVCBlogTez.Models
         public int? CinsiyetId { get; set; }
 
         [Required(ErrorMessage = "*Doğum Tarihi alanı boş geçilemez.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DogumTarihi { get; set; }
         public string AcikAdres { get; set; }
         public int DurumId { get; set; }

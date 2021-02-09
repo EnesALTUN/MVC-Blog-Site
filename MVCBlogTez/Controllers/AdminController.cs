@@ -68,12 +68,15 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DuyuruEkle(Duyuru duyuru)
         {
-            duyuru.KullaniciId = (int)Session["UserId"];
-            duyuru.YayinlanmaTarihi = DateTime.Now;
-            duyuru.DurumId = 1;
+            if (ModelState.IsValid)
+            {
+                duyuru.KullaniciId = (int)Session["UserId"];
+                duyuru.YayinlanmaTarihi = DateTime.Now;
+                duyuru.DurumId = 1;
 
-            blogContext.Duyuru.Add(duyuru);
-            blogContext.SaveChanges();
+                blogContext.Duyuru.Add(duyuru);
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Duyuru");
         }
@@ -101,10 +104,13 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DuyuruDuzenle(Duyuru duyuru)
         {
-            Duyuru duyuru1 = blogContext.Duyuru.Where(x => x.DuyuruId == duyuru.DuyuruId).SingleOrDefault();
+            if (ModelState.IsValid)
+            {
+                Duyuru duyuru1 = blogContext.Duyuru.Where(x => x.DuyuruId == duyuru.DuyuruId).SingleOrDefault();
 
-            duyuru1.DuyuruIcerik = duyuru.DuyuruIcerik;
-            blogContext.SaveChanges();
+                duyuru1.DuyuruIcerik = duyuru.DuyuruIcerik;
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Duyuru");
         }
@@ -131,7 +137,7 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EtiketEkle(Etiket etiket)
         {
-            if (etiket != null)
+            if (ModelState.IsValid)
             {
                 etiket.DurumId = 1;
                 etiket.YaziId = Convert.ToInt32(Request.Form["yazilar"]);
@@ -155,15 +161,18 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EtiketDuzenle(Etiket etiket)
         {
-            Etiket etiket1 = blogContext.Etiket.Where(x => x.EtiketId == etiket.EtiketId).SingleOrDefault();
+            if (ModelState.IsValid)
+            {
+                Etiket etiket1 = blogContext.Etiket.Where(x => x.EtiketId == etiket.EtiketId).SingleOrDefault();
 
-            etiket1.EtiketAd = etiket.EtiketAd;
-            etiket1.YaziId = Convert.ToInt32(Request.Form["yazilar"]);
-            blogContext.SaveChanges();
+                etiket1.EtiketAd = etiket.EtiketAd;
+                etiket1.YaziId = Convert.ToInt32(Request.Form["yazilar"]);
+
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Etiket");
         }
-
 
         public ActionResult EtiketSil(int? id)
         {
@@ -196,13 +205,16 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult KategoriEkle(Kategori kategori)
         {
-            kategori.YaziSayisi = 0;
-            kategori.KullaniciId = (int)Session["UserId"];
-            kategori.OlusturulmaTarihi = DateTime.Now;
-            kategori.DurumId = 1;
+            if (ModelState.IsValid)
+            {
+                kategori.YaziSayisi = 0;
+                kategori.KullaniciId = (int)Session["UserId"];
+                kategori.OlusturulmaTarihi = DateTime.Now;
+                kategori.DurumId = 1;
 
-            blogContext.Kategori.Add(kategori);
-            blogContext.SaveChanges();
+                blogContext.Kategori.Add(kategori);
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Kategori");
         }
@@ -239,9 +251,12 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RolEkle(Rol rol)
         {
-            rol.DurumId = 1;
-            blogContext.Rol.Add(rol);
-            blogContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                rol.DurumId = 1;
+                blogContext.Rol.Add(rol);
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Rol");
         }
@@ -275,19 +290,22 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SliderEkle(Slider slider)
         {
-            slider.DurumId = 1;
-
-            if (Path.GetFileName(Request.Files[0].FileName) != "")
+            if (ModelState.IsValid)
             {
-                string filename = Path.GetFileName(Request.Files[0].FileName);
-                string uzanti = Path.GetExtension(Request.Files[0].FileName);
-                string yol = "~/Uploads/images/" + filename;
-                Request.Files[0].SaveAs(Server.MapPath(yol));
-                slider.FotografKonum = "/Uploads/images/" + filename;
-            }
+                slider.DurumId = 1;
 
-            blogContext.Slider.Add(slider);
-            blogContext.SaveChanges();
+                if (Path.GetFileName(Request.Files[0].FileName) != "")
+                {
+                    string filename = Path.GetFileName(Request.Files[0].FileName);
+                    string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                    string yol = "~/Uploads/images/" + filename;
+                    Request.Files[0].SaveAs(Server.MapPath(yol));
+                    slider.FotografKonum = "/Uploads/images/" + filename;
+                }
+
+                blogContext.Slider.Add(slider);
+                blogContext.SaveChanges();
+            }
 
             return Redirect("/Admin/Slider");
         }
@@ -328,7 +346,7 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult YaziEkle(Yazi yazi)
         {
-            if (yazi != null)
+            if (ModelState.IsValid)
             {
                 int kategoriId = Convert.ToInt32(Request.Form["kategoriler"]);
 

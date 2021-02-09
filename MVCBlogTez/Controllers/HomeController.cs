@@ -74,7 +74,7 @@ namespace MVCBlogTez.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (blogContext.Kullanici.Where(x => x.Email == kullanici.Email).Count() > 0)
+                if (blogContext.Kullanici.Where(x => x.Email == kullanici.Email).FirstOrDefault() != null)
                 {
                     TempData["bos"] = "Girilen email adresi kullanımda.";
                     return Redirect("/Home/Register");
@@ -147,12 +147,7 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Yorum(Yorum yorum)
         {
-            if (yorum.YorumIcerik == null)
-            {
-                TempData["bos"] = "Boş yorum yapılamaz.";
-                return Redirect("/Home/Yazi/" + Session["YaziId"]);
-            }
-            else
+            if (ModelState.IsValid)
             {
                 yorum.KullaniciId = (int)Session["UserId"];
                 yorum.DurumId = 1;
@@ -197,6 +192,10 @@ namespace MVCBlogTez.Controllers
         [Authorize (Roles = "Üye, Admin")]
         public ActionResult Profil()
         {
+            if (Session["UserId"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
             int UserId = (int)Session["UserId"];
 
             ProfilViewModel profil = new ProfilViewModel();
@@ -212,27 +211,32 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProfilDuzenle(Kullanici kullanici)
         {
-            int UserId = (int)Session["UserId"];
-
-            Kullanici kullanici1 = blogContext.Kullanici.Where(x => x.KullaniciId == UserId).SingleOrDefault();
-            kullanici1.Ad = kullanici.Ad;
-            kullanici1.Soyad = kullanici.Soyad;
-            kullanici1.Email = kullanici.Email;
-            kullanici1.Parola = Tool.GenerateMd5(kullanici.Parola);
-            kullanici1.Telefon = kullanici.Telefon;
-
-            if (Path.GetFileName(Request.Files[0].FileName) != "")
+            if (ModelState.IsValid)
             {
-                string filename = Path.GetFileName(Request.Files[0].FileName);
-                string uzanti = Path.GetExtension(Request.Files[0].FileName);
-                string yol = "~/Uploads/images/" + filename;
-                Request.Files[0].SaveAs(Server.MapPath(yol));
-                kullanici1.FotografKonum = "/Uploads/images/" + filename;
-            }
-            kullanici1.CinsiyetId = kullanici.CinsiyetId;
-            kullanici1.AcikAdres = kullanici.AcikAdres;
+                int UserId = (int)Session["UserId"];
 
-            blogContext.SaveChanges();
+                Kullanici kullanici1 = blogContext.Kullanici.Where(x => x.KullaniciId == UserId).SingleOrDefault();
+                kullanici1.Ad = kullanici.Ad;
+                kullanici1.Soyad = kullanici.Soyad;
+                kullanici1.Email = kullanici.Email;
+                kullanici1.Parola = Tool.GenerateMd5(kullanici.Parola);
+                kullanici1.Telefon = kullanici.Telefon;
+
+                if (Path.GetFileName(Request.Files[0].FileName) != "")
+                {
+                    string filename = Path.GetFileName(Request.Files[0].FileName);
+                    string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                    string yol = "~/Uploads/images/" + filename;
+                    Request.Files[0].SaveAs(Server.MapPath(yol));
+                    kullanici1.FotografKonum = "/Uploads/images/" + filename;
+                }
+                kullanici1.CinsiyetId = kullanici.CinsiyetId;
+                kullanici1.AcikAdres = kullanici.AcikAdres;
+
+                TempData["info"] = "Profiliniz başarıyla güncellendi";
+                blogContext.SaveChanges();
+            }
+
             return Redirect("/Home/Profil");
         }
 
@@ -245,14 +249,17 @@ namespace MVCBlogTez.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Iletisim(Iletisim iletisim)
         {
-            var body = new StringBuilder();
-            body.AppendLine("Ad Soyad: " + iletisim.AdSoyad);
-            body.AppendLine("Email: " + iletisim.Email);
-            body.AppendLine("Tel: " + iletisim.Telefon);
-            body.AppendLine("\nMesaj: " + iletisim.Mesaj);
+            if (ModelState.IsValid)
+            {
+                var body = new StringBuilder();
+                body.AppendLine("Ad Soyad: " + iletisim.AdSoyad);
+                body.AppendLine("Email: " + iletisim.Email);
+                body.AppendLine("Tel: " + iletisim.Telefon);
+                body.AppendLine("\nMesaj: " + iletisim.Mesaj);
 
-            Gmail.SendMail(body.ToString(), iletisim.Konu);
-            TempData["Success"] = "Mesajınız başarıyla gönderilmiştir.";
+                Gmail.SendMail(body.ToString(), iletisim.Konu);
+                TempData["Success"] = "Mesajınız başarıyla gönderilmiştir.";
+            }
             
             return Redirect("/Home/Contact");
         }

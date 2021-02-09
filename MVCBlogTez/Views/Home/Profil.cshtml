@@ -9,10 +9,10 @@
     <div class="container section">
         @using (Html.BeginForm("ProfilDuzenle", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            if (ViewBag.Err != null)
+            if (TempData["info"] != null)
             {
-                <div class="alert alert-danger">
-                    @ViewBag.Err
+                <div class="alert alert-success">
+                    @TempData["info"]
                 </div>
             }
             @Html.AntiForgeryToken()
@@ -67,8 +67,8 @@
                         }
                     </div>
                     <div class="form-group col-12 col-md-6">
-                        @Html.Label("Doğum Tarihi:")<b> @item.DogumTarihi.ToString("dd MMM yyyy") </b><br />
-                        @Html.TextBoxFor(x => item.DogumTarihi, new { type = "datetime-local", @Name = "DogumTarihi", @id = "DogumTarihi" })
+                        @Html.Label("Doğum Tarihi:")<br />
+                        @Html.EditorFor(x => item.DogumTarihi, new { @Name = "DogumTarihi", @id = "DogumTarihi", Value = item.DogumTarihi })
                     </div>
                     <div class="form-group col-12">
                         @Html.Label("Adres:")

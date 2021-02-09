@@ -5,6 +5,12 @@
     <div class="container loginForm section">
         @using (Html.BeginForm("Register", "Home", FormMethod.Post))
         {
+            if (TempData["bos"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["bos"]
+                </div>
+            }
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="formCerceve">
@@ -14,7 +20,7 @@
                     <div class="col-12 col-md-6">
                         @Html.Label("Ad:")
                         @Html.TextBoxFor(x => x.Kullanici.Ad, new { @class = "form-control", @Name = "Ad", @id = "Ad" })
-                        @Html.ValidationMessageFor(x => x.Kullanici.Ad, "", new { @style = "color:red", @data_valmsg_for="Ad" })
+                        @Html.ValidationMessageFor(x => x.Kullanici.Ad, "", new { @style = "color:red", @data_valmsg_for = "Ad" })
                     </div>
                     <div class="col-12 col-md-6">
                         @Html.Label("Soyad:")
@@ -36,6 +42,11 @@
                         @Html.TextBoxFor(x => x.Kullanici.Telefon, new { @class = "form-control", @Name = "Telefon", @id = "Telefon" })
                     </div>
                     <div class="col-12 col-md-6">
+                        @Html.Label("Doğum Tarihi:")
+                        @Html.TextBoxFor(x => Model.Kullanici.DogumTarihi, new { type = "datetime-local", @Name = "DogumTarihi", @id = "DogumTarihi" })
+                        @Html.ValidationMessageFor(x => x.Kullanici.DogumTarihi, "", new { @style = "color:red", @data_valmsg_for = "DogumTarihi" })
+                    </div>
+                    <div class="col-12 col-md-6">
                         @Html.Label("Cinsiyet:")<br />
 
                         @foreach (var Cinsiyet in Model.Cinsiyetler)
@@ -43,14 +54,9 @@
                             <span> </span>@Html.RadioButtonFor(x => Cinsiyet.CinsiyetId, Cinsiyet.CinsiyetId, new { @Name = "CinsiyetId", @id = "CinsiyetId" }) <span> </span> @Html.Label(Cinsiyet.CinsiyetAd)
                         }
                     </div>
-                    <div class="col-12 col-md-6">
-                        @Html.Label("Doğum Tarihi:")
-                        @Html.TextBoxFor(x => x.Kullanici.DogumTarihi, new { type = "datetime-local", @Name = "DogumTarihi", @id = "DogumTarihi" })
-                        @Html.ValidationMessageFor(x => x.Kullanici.DogumTarihi, "", new { @style = "color:red", @data_valmsg_for = "DogumTarihi" })
-                    </div>
                 </div>
                 <div class="form-group text-right">
-                    <input type="submit" name="register" value="Kayıt Ol" />
+                    <input type="submit" name="login" value="Kayıt Ol" />
                 </div>
             </div>
         }
